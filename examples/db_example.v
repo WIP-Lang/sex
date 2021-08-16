@@ -27,6 +27,7 @@ fn layout(title string, body []html.Tag) html.Tag {
                     font-size: 1.4rem;
                     font-family: Palatino, "Palatino Linotype", Georgia, "Lucida Bright",
                                     Cambria, Tahoma, Verdana, Arial, sans-serif;
+										background: #000;
                     color: #f3c3d9;
                 }
 
