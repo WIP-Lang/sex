@@ -19,7 +19,7 @@ fn layout(title string, body []html.Tag) html.Tag {
 				'name':    'referrer'
 				'content': 'origin-when-cross-origin'
 			}),
-			html.tag(name: 'title', text: '$title | Vex SQLite Test'),
+			html.tag(name: 'title', text: '$title | Sex SQLite Test'),
 			html.style('
                 body {
                     width: 36rem;
@@ -27,8 +27,10 @@ fn layout(title string, body []html.Tag) html.Tag {
                     font-size: 1.4rem;
                     font-family: Palatino, "Palatino Linotype", Georgia, "Lucida Bright",
                                     Cambria, Tahoma, Verdana, Arial, sans-serif;
-                    color: #0C3C26;
+                    color: #f3c3d9;
                 }
+
+								a { color: #ff5103; }
             '),
 		]),
 		html.block({
@@ -41,8 +43,8 @@ fn layout(title string, body []html.Tag) html.Tag {
 fn main() {
 	mut app := router.new()
 	db := sqlite.connect(':memory:') ?
-	db.exec('drop table if exists users;')
-	db.exec('create table users (id integer primary key, name text default "");')
+	db.exec('drop table if exists fuck_buddies;')
+	db.exec('create table fuck_buddies (id integer primary key, name text default "");')
 	app.inject(db)
 	app.route(.get, '/', fn (req &ctx.Req, mut res ctx.Resp) {
 		page := layout('', [
@@ -54,58 +56,51 @@ fn main() {
 				html.tag(
 					name: 'a'
 					attr: {
-						'href': 'https://github.com/nedpals/vex'
+						'href': 'https://github.com/WIP-lang/sex'
 					}
-					text: 'vex'
+					text: 'sex'
 				),
 				html.br(),
 				html.block({
 					name: 'em'
 				}, [
-					html.tag(name: 'text', text: "It's a web framework based on "),
-					html.tag(
-						name: 'a'
-						attr: {
-							'href': 'https://vlang.io'
-						}
-						text: 'V.'
-					),
+					html.tag(name: 'text', text: "It's a web butthole that you can shove to your ass.")
 				]),
 			]),
 			html.tag(
 				name: 'a'
 				attr: {
-					'href': '/users'
+					'href': '/fuck_harder'
 				}
-				text: 'All users'
+				text: 'Quick! My parents are coming!'
 			),
 			html.br(),
 			html.tag(
 				name: 'a'
 				attr: {
-					'href': '/users/add'
+					'href': '/fuck_buddies/add'
 				}
-				text: 'Add a user'
+				text: 'Add a fuck buddy'
 			),
 		])
 		res.send_html(page.html(), 200)
 	})
-	app.route(.get, '/users', fn (req &ctx.Req, mut res ctx.Resp) {
+	app.route(.get, '/fuck_harder', fn (req &ctx.Req, mut res ctx.Resp) {
 		db2 := &sqlite.DB(req.ctx)
-		users_from_db, _ := db2.exec('select * from users;')
-		mut users := []html.Tag{}
-		for row in users_from_db {
+		fuck_buddies_from_db, _ := db2.exec('select * from fuck_buddies;')
+		mut fuck_buddies := []html.Tag{}
+		for row in fuck_buddies_from_db {
 			tag := html.Tag{
 				name: 'li'
 				text: row.vals[1]
 			}
-			users << tag
+			fuck_buddies << tag
 		}
-		page := layout('Users', [
-			html.tag(name: 'h1', text: 'Users'),
+		page := layout('Fuck Buddies', [
+			html.tag(name: 'h1', text: 'Fuck Buddies'),
 			html.block({
 				name: 'ul'
-			}, users),
+			}, fuck_buddies),
 			html.tag(
 				name: 'a'
 				attr: {
@@ -116,22 +111,22 @@ fn main() {
 		])
 		res.send_html(page.html(), 200)
 	})
-	app.route(.get, '/users/add', fn (req &ctx.Req, mut res ctx.Resp) {
-		page := layout('Add new User', [
+	app.route(.get, '/fuck_buddies/add', fn (req &ctx.Req, mut res ctx.Resp) {
+		page := layout('Add new Fuck Buddy', [
 			html.tag(
 				name: 'a'
 				attr: {
-					'href': '/users'
+					'href': '/fuck_harder'
 				}
-				text: 'All users'
+				text: 'All fuck buddies'
 			),
-			html.tag(name: 'h1', text: 'Add user'),
+			html.tag(name: 'h1', text: 'Add Fuck Buddy'),
 			html.block({
 				name: 'form'
 				attr: {
 					'id':     'form'
 					'method': 'post'
-					'action': '/users/new'
+					'action': '/fuck_buddies/new'
 				}
 			}, [
 				html.Tag{
@@ -153,14 +148,14 @@ fn main() {
 		])
 		res.send_html(page.html(), 200)
 	})
-	app.route(.post, '/users/new', fn (req &ctx.Req, mut res ctx.Resp) {
+	app.route(.post, '/fuck_buddies/new', fn (req &ctx.Req, mut res ctx.Resp) {
 		db2 := &sqlite.DB(req.ctx)
 		form_data := req.parse_form() or {
 			map[string]string{}
 		}
 		name := form_data['name']
-		db2.exec('insert into users (name) values ("$name");')
-		res.permanent_redirect('/users')
+		db2.exec('insert into fuck_buddies (name) values ("$name");')
+		res.permanent_redirect('/fuck_buddies')
 	})
 	server.serve(app, 8080)
 }

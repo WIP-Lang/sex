@@ -15,7 +15,7 @@ fn print_req_info(mut req ctx.Req, mut res ctx.Resp) {
 }
 
 fn do_stuff(mut req ctx.Req, mut res ctx.Resp) {
-	println('incoming request!')
+	println('incoming semen')
 }
 
 fn main() {
